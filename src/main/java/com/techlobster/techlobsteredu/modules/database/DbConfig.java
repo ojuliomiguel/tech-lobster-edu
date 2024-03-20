@@ -19,8 +19,8 @@ public class DbConfig {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("driverClassName"));
         dataSource.setUrl(env.getProperty("url"));
-        dataSource.setUrl(env.getProperty("user"));
-        dataSource.setUrl(env.getProperty("password"));
+        dataSource.setUsername(env.getProperty("user"));
+        dataSource.setPassword(env.getProperty("password"));
         return dataSource;
     }
 }
