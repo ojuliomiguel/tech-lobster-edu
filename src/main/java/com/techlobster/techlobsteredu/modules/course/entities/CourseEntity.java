@@ -10,7 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NonNull;
 
+@Data
 @Entity(name = "Course")
 public class CourseEntity {
 
@@ -18,8 +21,10 @@ public class CourseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @NonNull
     private String name;
 
+    @NonNull
     private String category;
 
     @CreationTimestamp

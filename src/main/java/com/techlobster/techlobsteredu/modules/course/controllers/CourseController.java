@@ -1,6 +1,7 @@
 package com.techlobster.techlobsteredu.modules.course.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.techlobster.techlobsteredu.modules.course.entities.CourseEntity;
 import com.techlobster.techlobsteredu.modules.course.repositories.CourseRepository;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/courses")
 public class CourseController {
-    
+
     @Autowired
-    private  CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     @GetMapping("")
     @RequestMapping(produces = "application/json")
@@ -25,9 +28,13 @@ public class CourseController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> create(@RequestBody CourseEntity course) {
-        var courseCreated = this.courseRepository.save(course);
-        return ResponseEntity.created(null).body(courseCreated);
+    public ResponseEntity<Object> create(@Valid @RequestBody CourseEntity course) {
+        try {
+            var courseCreated = this.courseRepository.save(course);
+            return ResponseEntity.created(null).body(courseCreated);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-    
+
 }
